@@ -8,7 +8,7 @@
     "start": "npx nodemon src/index.ts",
     "build": "npx tsc",
     "prettier": "prettier --config .prettierrc \"src/**/*.ts\" --write",
-    "lint": "eslint \"src/**/*.ts\""
+    "lint": "eslint . --ext .ts"
   },
   "author": "Jordan Boyd",
   "license": "ISC",

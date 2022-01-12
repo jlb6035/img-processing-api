@@ -3,10 +3,10 @@ import images from './images';
 
 const routes = express.Router();
 
-routes.get("/", (req, res)=>{
-    res.send("Hello Jordan! From routes api");
-  });
+routes.get('/', (req, res) => {
+  res.send('Hello Jordan! From routes api');
+});
 
-routes.use("/images", images);
+routes.use('/images', images);
 
 export default routes;
