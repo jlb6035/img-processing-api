@@ -4,22 +4,28 @@
   "description": "Image Processing API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run build && npm run jasmine",
     "start": "npx nodemon src/index.ts",
     "build": "npx tsc",
     "prettier": "prettier --config .prettierrc \"src/**/*.ts\" --write",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "jasmine": "jasmine"
   },
   "author": "Jordan Boyd",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.2",
-    "sharp": "^0.29.3"
+    "jasmine": "^4.0.2",
+    "jasmine-spec-reporter": "^7.0.0",
+    "sharp": "^0.29.3",
+    "supertest": "^6.2.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
+    "@types/jasmine": "^3.10.3",
     "@types/node": "^17.0.8",
     "@types/sharp": "^0.29.5",
+    "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.9.0",
     "@typescript-eslint/parser": "^5.9.0",
     "eslint": "^8.6.0",
