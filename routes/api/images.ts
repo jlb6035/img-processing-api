@@ -19,12 +19,17 @@ images.get('/', async (req, res) => {
   if (fileExsist) {
     res.sendFile(path.resolve('assets/images/thumbnail', newFileName));
   } else {
-    const imgName = await getImage(
-      filename as string,
-      parseInt(width),
-      parseInt(height)
-    );
-    res.sendFile(path.resolve('assets/images/thumbnail', newFileName));
+    try{
+      const imgName = await getImage(
+        filename as string,
+        parseInt(width),
+        parseInt(height)
+      );
+      res.sendFile(path.resolve('assets/images/thumbnail', newFileName));
+    } catch(e){
+      res.send("Something Went wrong, please try again later");
+    }
+
   }
 });
 
