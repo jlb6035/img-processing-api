@@ -13,6 +13,9 @@ describe('Test Image Services', () => {
 
     it('test the image proccessing api endpoint', async () => {
         const response = await request.get('/api/images?filename=icelandwaterfall.jpg&width=300&height=400');
+        const filepath = path.resolve("assets/images/thumbnail", "icelandwaterfall300400.jpg");
+        const filename = path.basename(filepath);
         expect(response.status).toBe(200);
+        expect(filename).toBe("icelandwaterfall300400.jpg");
     }
 )});

@@ -40,6 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var images_1 = __importDefault(require("../../../routes/api/images"));
+var path_1 = __importDefault(require("path"));
 var index_1 = __importDefault(require("../../index"));
 var supertest_1 = __importDefault(require("supertest"));
 var request = (0, supertest_1.default)(index_1.default);
@@ -48,13 +49,16 @@ describe('Test Image Services', function () {
         expect(images_1.default.convertFileName("fjord.jpg", 100, 200)).toBe("fjord100200.jpg");
     });
     it('test the image proccessing api endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var response;
+        var response, filepath, filename;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, request.get('/api/images?filename=icelandwaterfall.jpg&width=300&height=400')];
                 case 1:
                     response = _a.sent();
+                    filepath = path_1.default.resolve("assets/images/thumbnail", "icelandwaterfall300400.jpg");
+                    filename = path_1.default.basename(filepath);
                     expect(response.status).toBe(200);
+                    expect(filename).toBe("icelandwaterfall300400.jpg");
                     return [2 /*return*/];
             }
         });
