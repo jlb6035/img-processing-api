@@ -39,6 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.isFileAvailable = exports.convertFileName = exports.getImage = exports.processImage = void 0;
 var express_1 = __importDefault(require("express"));
 var sharp_1 = __importDefault(require("sharp"));
 var path_1 = __importDefault(require("path"));
@@ -94,6 +95,7 @@ function processImage(filename, width, height) {
         });
     }); });
 }
+exports.processImage = processImage;
 function getImage(filename, width, height) {
     return __awaiter(this, void 0, void 0, function () {
         var response, err_1;
@@ -113,10 +115,12 @@ function getImage(filename, width, height) {
         });
     });
 }
+exports.getImage = getImage;
 function convertFileName(filename, width, height) {
     var name = filename.slice(0, filename.length - 4);
     return "".concat(name).concat(width).concat(height, ".jpg");
 }
+exports.convertFileName = convertFileName;
 function isFileAvailable(fileName) {
     try {
         fs_1.default.accessSync(path_1.default.resolve('assets/images/thumbnail', fileName), fs_1.default.constants.F_OK);
@@ -126,4 +130,5 @@ function isFileAvailable(fileName) {
         return false;
     }
 }
-exports.default = images;
+exports.isFileAvailable = isFileAvailable;
+exports.default = { images: images, processImage: processImage, getImage: getImage, convertFileName: convertFileName, isFileAvailable: isFileAvailable };

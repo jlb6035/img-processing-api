@@ -9,5 +9,5 @@ var routes = express_1.default.Router();
 routes.get('/', function (req, res) {
     res.send('Hello Jordan! From routes api');
 });
-routes.use('/images', images_1.default);
+routes.use('/images', images_1.default.images);
 exports.default = routes;

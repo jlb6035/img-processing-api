@@ -28,7 +28,7 @@ images.get('/', async (req, res) => {
   }
 });
 
-function processImage(
+export function processImage(
   filename: string,
   width: number,
   height: number
@@ -50,7 +50,7 @@ function processImage(
   });
 }
 
-async function getImage(filename: string, width: number, height: number) {
+export async function getImage(filename: string, width: number, height: number) {
   try {
     const response = await processImage(filename, width, height);
     return response;
@@ -59,12 +59,12 @@ async function getImage(filename: string, width: number, height: number) {
   }
 }
 
-function convertFileName(filename: string, width: number, height: number) {
+export function convertFileName(filename: string, width: number, height: number) {
   let name = filename.slice(0, filename.length - 4);
   return `${name}${width}${height}.jpg`;
 }
 
-function isFileAvailable(fileName: string) {
+export function isFileAvailable(fileName: string) {
   try {
     fs.accessSync(
       path.resolve('assets/images/thumbnail', fileName),
@@ -76,4 +76,4 @@ function isFileAvailable(fileName: string) {
   }
 }
 
-export default images;
+export default {images, processImage, getImage, convertFileName, isFileAvailable};
