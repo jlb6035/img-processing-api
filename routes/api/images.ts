@@ -6,21 +6,21 @@ import fs from 'fs';
 const images = express.Router();
 
 images.get('/', async (req, res) => {
-  let filename = req.query.filename;
-  let width = req.query.width as string;
-  let height = req.query.height as string;
-  let newFileName = convertFileName(
+  const filename = req.query.filename;
+  const width = req.query.width as string;
+  const height = req.query.height as string;
+  const newFileName = convertFileName(
     filename as string,
     parseInt(width),
     parseInt(height)
   );
-  let fileExsist = isFileAvailable(newFileName);
+  const fileExsist = isFileAvailable(newFileName);
 
   if (fileExsist) {
     res.sendFile(path.resolve('assets/images/thumbnail', newFileName));
   } else {
     try{
-      const imgName = await getImage(
+      await getImage(
         filename as string,
         parseInt(width),
         parseInt(height)
@@ -33,26 +33,20 @@ images.get('/', async (req, res) => {
   }
 });
 
-export function processImage(
-  filename: string,
-  width: number,
-  height: number
-): Promise<String> {
-  return new Promise(async (resolve, reject) => {
-    let filepath: string = path.resolve(
+export async function processImage(filename: string, width: number, height: number) {
+    const filepath: string = path.resolve(
       'assets/images/full',
       filename as string
     );
-    let outputFile = filename.slice(0, filename.length - 4);
+    const outputFile = filename.slice(0, filename.length - 4);
     try {
       await sharp(filepath)
         .resize(width, height)
         .toFile(`assets/images/thumbnail/${outputFile}${width}${height}.jpg`);
-      resolve(`${outputFile}`);
-    } catch (e) {
-      reject(e);
+      return (`${outputFile}`);
+    } catch (e: unknown) {
+      return (e as string);
     }
-  });
 }
 
 export async function getImage(filename: string, width: number, height: number) {
@@ -65,7 +59,7 @@ export async function getImage(filename: string, width: number, height: number) 
 }
 
 export function convertFileName(filename: string, width: number, height: number) {
-  let name = filename.slice(0, filename.length - 4);
+  const name = filename.slice(0, filename.length - 4);
   return `${name}${width}${height}.jpg`;
 }
 
