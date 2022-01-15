@@ -46,7 +46,7 @@ var path_1 = __importDefault(require("path"));
 var fs_1 = __importDefault(require("fs"));
 var images = express_1.default.Router();
 images.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var filename, width, height, newFileName, fileExsist, imgName;
+    var filename, width, height, newFileName, fileExsist, e_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -57,20 +57,25 @@ images.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, f
                 fileExsist = isFileAvailable(newFileName);
                 if (!fileExsist) return [3 /*break*/, 1];
                 res.sendFile(path_1.default.resolve('assets/images/thumbnail', newFileName));
-                return [3 /*break*/, 3];
-            case 1: return [4 /*yield*/, getImage(filename, parseInt(width), parseInt(height))];
+                return [3 /*break*/, 4];
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, getImage(filename, parseInt(width), parseInt(height))];
             case 2:
-                imgName = _a.sent();
+                _a.sent();
                 res.sendFile(path_1.default.resolve('assets/images/thumbnail', newFileName));
-                _a.label = 3;
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 3:
+                e_1 = _a.sent();
+                res.send("Something Went wrong, please try again later");
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); });
 function processImage(filename, width, height) {
-    var _this = this;
-    return new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
-        var filepath, outputFile, e_1;
+    return __awaiter(this, void 0, void 0, function () {
+        var filepath, outputFile, e_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -84,16 +89,14 @@ function processImage(filename, width, height) {
                             .toFile("assets/images/thumbnail/".concat(outputFile).concat(width).concat(height, ".jpg"))];
                 case 2:
                     _a.sent();
-                    resolve("".concat(outputFile));
-                    return [3 /*break*/, 4];
+                    return [2 /*return*/, ("".concat(outputFile))];
                 case 3:
-                    e_1 = _a.sent();
-                    reject(e_1);
-                    return [3 /*break*/, 4];
+                    e_2 = _a.sent();
+                    return [2 /*return*/, e_2];
                 case 4: return [2 /*return*/];
             }
         });
-    }); });
+    });
 }
 exports.processImage = processImage;
 function getImage(filename, width, height) {
