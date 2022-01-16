@@ -1,13 +1,13 @@
-import images from '../../../routes/api/images';
 import path from 'path';
 import app from '../../index';
 import supertest from 'supertest';
+import utilities from '../../utilities';
 
 const request = supertest(app);
 
 describe('Test Image Services', () => {
   it('test convert file name', () => {
-    expect(images.convertFileName('fjord.jpg', 100, 200)).toBe(
+    expect(utilities.convertFileName('fjord.jpg', 100, 200)).toBe(
       'fjord100200.jpg'
     );
   });

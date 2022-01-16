@@ -40,42 +40,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isFileAvailable = exports.convertFileName = exports.getImage = exports.processImage = void 0;
-var express_1 = __importDefault(require("express"));
 var sharp_1 = __importDefault(require("sharp"));
 var path_1 = __importDefault(require("path"));
 var fs_1 = __importDefault(require("fs"));
-var images = express_1.default.Router();
-images.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var filename, width, height, newFileName, fileExsist, e_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                filename = req.query.filename;
-                width = req.query.width;
-                height = req.query.height;
-                newFileName = convertFileName(filename, parseInt(width), parseInt(height));
-                fileExsist = isFileAvailable(newFileName);
-                if (!fileExsist) return [3 /*break*/, 1];
-                res.sendFile(path_1.default.resolve('assets/images/thumbnail', newFileName));
-                return [3 /*break*/, 4];
-            case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, getImage(filename, parseInt(width), parseInt(height))];
-            case 2:
-                _a.sent();
-                res.sendFile(path_1.default.resolve('assets/images/thumbnail', newFileName));
-                return [3 /*break*/, 4];
-            case 3:
-                e_1 = _a.sent();
-                res.send("Something Went wrong, please try again later");
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); });
 function processImage(filename, width, height) {
     return __awaiter(this, void 0, void 0, function () {
-        var filepath, outputFile, e_2;
+        var filepath, outputFile, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -89,10 +59,10 @@ function processImage(filename, width, height) {
                             .toFile("assets/images/thumbnail/".concat(outputFile).concat(width).concat(height, ".jpg"))];
                 case 2:
                     _a.sent();
-                    return [2 /*return*/, ("".concat(outputFile))];
+                    return [2 /*return*/, "".concat(outputFile)];
                 case 3:
-                    e_2 = _a.sent();
-                    return [2 /*return*/, e_2];
+                    e_1 = _a.sent();
+                    return [2 /*return*/, e_1];
                 case 4: return [2 /*return*/];
             }
         });
@@ -101,19 +71,17 @@ function processImage(filename, width, height) {
 exports.processImage = processImage;
 function getImage(filename, width, height) {
     return __awaiter(this, void 0, void 0, function () {
-        var response, err_1;
+        var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 2, , 3]);
+                    if (!(width && height)) return [3 /*break*/, 2];
                     return [4 /*yield*/, processImage(filename, width, height)];
                 case 1:
                     response = _a.sent();
+                    console.log('Response from function ' + response);
                     return [2 /*return*/, response];
-                case 2:
-                    err_1 = _a.sent();
-                    return [2 /*return*/, err_1];
-                case 3: return [2 /*return*/];
+                case 2: return [2 /*return*/, 'Please enter a numeric width and height!'];
             }
         });
     });
@@ -134,4 +102,4 @@ function isFileAvailable(fileName) {
     }
 }
 exports.isFileAvailable = isFileAvailable;
-exports.default = { images: images, processImage: processImage, getImage: getImage, convertFileName: convertFileName, isFileAvailable: isFileAvailable };
+exports.default = { processImage: processImage, getImage: getImage, convertFileName: convertFileName, isFileAvailable: isFileAvailable };

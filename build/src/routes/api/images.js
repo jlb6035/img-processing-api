@@ -39,28 +39,36 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = __importDefault(require("express"));
 var path_1 = __importDefault(require("path"));
-var index_1 = __importDefault(require("../../index"));
-var supertest_1 = __importDefault(require("supertest"));
 var utilities_1 = __importDefault(require("../../utilities"));
-var request = (0, supertest_1.default)(index_1.default);
-describe('Test Image Services', function () {
-    it('test convert file name', function () {
-        expect(utilities_1.default.convertFileName('fjord.jpg', 100, 200)).toBe('fjord100200.jpg');
+var images = express_1.default.Router();
+images.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var filename, width, height, newFileName, fileExsist, response;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                filename = req.query.filename;
+                width = req.query.width;
+                height = req.query.height;
+                newFileName = utilities_1.default.convertFileName(filename, parseInt(width), parseInt(height));
+                fileExsist = utilities_1.default.isFileAvailable(newFileName);
+                if (!fileExsist) return [3 /*break*/, 1];
+                res.sendFile(path_1.default.resolve('assets/images/thumbnail', newFileName));
+                return [3 /*break*/, 3];
+            case 1: return [4 /*yield*/, utilities_1.default.getImage(filename, parseInt(width), parseInt(height))];
+            case 2:
+                response = _a.sent();
+                if (newFileName.includes(response)) {
+                    res.sendFile(path_1.default.resolve('assets/images/thumbnail', newFileName));
+                }
+                else {
+                    console.log(response);
+                    res.send(response);
+                }
+                _a.label = 3;
+            case 3: return [2 /*return*/];
+        }
     });
-    it('test the image proccessing api endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var response, filepath, filename;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/api/images?filename=icelandwaterfall.jpg&width=300&height=400')];
-                case 1:
-                    response = _a.sent();
-                    filepath = path_1.default.resolve('assets/images/thumbnail', 'icelandwaterfall300400.jpg');
-                    filename = path_1.default.basename(filepath);
-                    expect(response.status).toBe(200);
-                    expect(filename).toBe('icelandwaterfall300400.jpg');
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-});
+}); });
+exports.default = images;
