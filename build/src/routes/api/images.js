@@ -63,7 +63,6 @@ images.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, f
                     res.sendFile(path_1.default.resolve('assets/images/thumbnail', newFileName));
                 }
                 else {
-                    console.log(response);
                     res.send(response);
                 }
                 _a.label = 3;

@@ -79,7 +79,6 @@ function getImage(filename, width, height) {
                     return [4 /*yield*/, processImage(filename, width, height)];
                 case 1:
                     response = _a.sent();
-                    console.log('Response from function ' + response);
                     return [2 /*return*/, response];
                 case 2: return [2 /*return*/, 'Please enter a numeric width and height!'];
             }

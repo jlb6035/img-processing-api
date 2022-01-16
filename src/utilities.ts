@@ -29,7 +29,6 @@ export async function getImage(
 ): Promise<string> {
   if (width && height) {
     const response = await processImage(filename, width, height);
-    console.log('Response from function ' + response);
     return response;
   } else {
     return 'Please enter a numeric width and height!';

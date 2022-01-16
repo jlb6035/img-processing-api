@@ -26,7 +26,6 @@ images.get('/', async (req: Request, res: Response) => {
     if (newFileName.includes(response)) {
       res.sendFile(path.resolve('assets/images/thumbnail', newFileName));
     } else {
-      console.log(response);
       res.send(response);
     }
   }
